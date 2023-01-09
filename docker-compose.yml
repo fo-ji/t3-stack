@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  t3_postgres:
+    platform: linux/amd64
+    image: postgres:14-alpine
+    container_name: t3_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: udemy
+      POSTGRES_PASSWORD: udemy
+      POSTGRES_DB: udemy
+      TZ: Asia/Tokyo
+    ports:
+      - 5432:5432
+    volumes:
+      - ./db/postgres/data:/var/lib/postgresql/data
+  app:
+    platform: linux/amd64
+    build: .
+    container_name: app
+    volumes:
+      - .:/usr/src/app
+    command: yarn dev
+    ports:
+      - 3000:3000
+      - 8080:8080
+      - 5555:5555
+    tty: true
+    depends_on:
+      - t3_postgres
