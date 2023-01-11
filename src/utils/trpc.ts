@@ -15,6 +15,12 @@ export const trpc = createTRPCNext<AppRouter>({
   config() {
     return {
       transformer: superjson,
+      // MEMO: react-queryをカスタマイズする際に追加
+      queryClientConfig: {
+        defaultOptions: {
+          queries: { retry: false, refetchOnWindowFocus: false },
+        },
+      },
       links: [
         loggerLink({
           enabled: (opts) =>
