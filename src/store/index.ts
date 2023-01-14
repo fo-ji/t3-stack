@@ -1,4 +1,4 @@
-import create from "zustand/react";
+import create from "zustand";
 import type { updateTaskInput } from "../schema/todo";
 
 interface State {
